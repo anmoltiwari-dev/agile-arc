@@ -12,7 +12,8 @@
     "migrate-dev": "prisma migrate dev",
     "studio": "prisma studio",
     "tidy-schema": "prisma format",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
