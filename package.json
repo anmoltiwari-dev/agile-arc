@@ -11,9 +11,11 @@
     "test:watch": "jest --watchAll",
     "migrate-dev": "prisma migrate dev",
     "studio": "prisma studio",
-    "tidy-schema": "prisma format"
+    "tidy-schema": "prisma format",
+    "generate": "prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
