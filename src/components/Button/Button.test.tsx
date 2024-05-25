@@ -5,7 +5,6 @@ import { Button } from "./index";
 describe("Button tests", () => {
     test("should render button", () => {
         render(<Button onClick={() => {}} />);
-
         const element =  screen.getByTestId("button-test");
         expect(element).toBeTruthy();
     });
