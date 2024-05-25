@@ -32,7 +32,7 @@ model Board {
   title       String
   description String?
   startDate   DateTime
-  endTime     DateTime
+  endDate     DateTime
   BoardColumn BoardColumn[]
   BoardTicket BoardTicket[]
 }
@@ -78,7 +78,7 @@ model Comment {
 model User {
   id              String        @id @default(cuid())
   name            String?
-  email           String?
+  email           String? @unique
   emailVerified   Boolean?
   image           String?
   comments        Comment[]
