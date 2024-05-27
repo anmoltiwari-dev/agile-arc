@@ -2,10 +2,12 @@
 import React, { ReactNode } from 'react'
 interface ButtonProps {
     onClick: () => void;
-    children: ReactNode;
+    primary?: boolean;
+    label?: string;
+    size?: string;
 }
-export const Button = ({onClick, children}: ButtonProps) => {
+export const Button = ({onClick, label}: ButtonProps) => {
   return (
-    <button onClick={onClick} data-testid="button-test">{children}</button>
+    <button onClick={onClick} data-testid="button-test">{label}</button>
   )
 }
