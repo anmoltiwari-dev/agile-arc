@@ -28,7 +28,7 @@ const NavAvatar = () => {
       {!isLoggedIn && !isLoading && (
         <button
         onClick={() => signIn()}
-        className="absolute cursor-pointer text-inverse button-brand p-2 rounded-sm"
+        className="cursor-pointer text-inverse button-brand p-2 rounded-sm"
       >
         Login
       </button>
