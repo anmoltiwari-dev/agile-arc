@@ -28,4 +28,4 @@ const useWindowDimensions = () => {
   return { windowDimensions, isDesktop }
 }
 
-export default useWindowDimensions
+export { useWindowDimensions }

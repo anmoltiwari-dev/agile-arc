@@ -20,15 +20,17 @@ const NavAvatar = () => {
             className="h-full w-full rounded-[inherit] object-cover cursor-pointer"
             src={session?.user?.image || ""}
             alt="Profile Picture"
+            data-testid="profile-picture"
             onClick={() => setToggleLogoutPopup(!toggleLogoutPopup)}
           />
-          <Avatar.Fallback className="skeleton w-full h-full animate-pulse" />
+          <Avatar.Fallback className="skeleton w-full h-full animate-pulse" data-testid="profile-shimmer" />
         </Avatar.Root>
       )}
       {!isLoggedIn && !isLoading && (
         <button
         onClick={() => signIn()}
         className="cursor-pointer text-inverse button-brand p-2 rounded-sm"
+        data-testid='login-btn'
       >
         Login
       </button>

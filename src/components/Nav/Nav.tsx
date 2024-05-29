@@ -3,13 +3,16 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { get } from "@vercel/edge-config";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
+
 import NavAvatar from "./NavAvatar";
 import ThemeToggle from "./ThemeToggle";
 import { navData } from "@/lib/navData";
-import { Composition } from "./nav.type";
+import { Composition, NavItemsInterface } from "./nav.type";
+import { useSession } from "next-auth/react";
+import customHook from "@/hooks";
 
 const NavContainer = (props: Composition) => {
+    const { useWindowDimensions } = customHook;
   const { isDesktop } = useWindowDimensions();
   const { children } = props;
   const [toggleNav, setToggleNav] = useState(false);
@@ -26,6 +29,7 @@ const NavContainer = (props: Composition) => {
           height={30}
           width={30}
           className="ml-auto my-3 mr-3 text-white cursor-pointer"
+          data-testid='hamburger-icon'
         />
       )}
       {toggleNav && children}
@@ -44,8 +48,10 @@ const NavRenderer = (props: Composition) => {
 const NavLogo = () => {
   return <div className="background-nav text-white sm:ml-3">Logo</div>;
 };
-const NavItem = (props: Composition) => {
-  const { children } = props;
+const NavItem = (props: NavItemsInterface) => {
+  const { data: session, status } = useSession();
+  const { children, authOnly = false } = props;
+  if (authOnly && status !== 'authenticated') return <></>;
   return (
     <div className="background-nav text-white sm:mr-3 p-2 border rounded font-semibold border-none">
       {children}
@@ -63,11 +69,11 @@ const NavGroup = (props: Composition) => {
 };
 const Navbar = () => {
   useEffect(() => {
-    const fetchConfig = async () => {
-      const greetings = await get("greeting");
-      console.log(greetings);
-    };
-    fetchConfig();
+    // const fetchConfig = async () => {
+    //   const greetings = await get("greeting");
+    //   console.log(greetings);
+    // };
+    // fetchConfig();
   }, []);
   const navItemMap = {
     logo: NavLogo,
@@ -83,7 +89,7 @@ const Navbar = () => {
             <NavGroup key={navGroup.id}>
               {navGroup.items.map((nI, id) => {
                 const Item = navItemMap[nI.type] || <></>;
-                return <Item key={id}>{nI.content ? nI.content : null}</Item>;
+                return <Item key={id} authOnly={nI.authOnly}>{nI.content ? nI.content : null}</Item>;
               })}
             </NavGroup>
           );
