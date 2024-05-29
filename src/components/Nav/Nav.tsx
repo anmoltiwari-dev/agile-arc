@@ -1,14 +1,13 @@
 "use client";
 
 import React, { ReactNode, useEffect, useState } from "react";
+import { get } from "@vercel/edge-config";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import NavAvatar from "./NavAvatar";
 import ThemeToggle from "./ThemeToggle";
-
-interface Composition {
-    children: ReactNode;
-}
+import { navData } from "@/lib/navData";
+import { Composition } from "./nav.type";
 
 const NavContainer = (props: Composition) => {
   const { isDesktop } = useWindowDimensions();
@@ -63,23 +62,34 @@ const NavGroup = (props: Composition) => {
   );
 };
 const Navbar = () => {
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const greetings = await get("greeting");
+      console.log(greetings);
+    };
+    fetchConfig();
+  }, []);
+  const navItemMap = {
+    logo: NavLogo,
+    item: NavItem,
+    avatar: NavAvatar,
+    themeToggle: ThemeToggle,
+  };
   return (
     <NavContainer>
       <NavRenderer>
-        <NavGroup>
-          <NavLogo />
-        </NavGroup>
-        <NavGroup>
-          <NavItem>Your work</NavItem>
-          <NavItem>Project</NavItem>
-          <NavItem>Filters</NavItem>
-        </NavGroup>
-        <NavGroup>
-          <NavAvatar />
-          <ThemeToggle />
-        </NavGroup>
+        {navData.map((navGroup) => {
+          return (
+            <NavGroup key={navGroup.id}>
+              {navGroup.items.map((nI, id) => {
+                const Item = navItemMap[nI.type] || <></>;
+                return <Item key={id}>{nI.content ? nI.content : null}</Item>;
+              })}
+            </NavGroup>
+          );
+        })}
       </NavRenderer>
     </NavContainer>
   );
 };
-export { Navbar };
+export { Navbar, NavLogo, NavItem };
