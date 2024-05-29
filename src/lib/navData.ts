@@ -13,15 +13,18 @@ export const navData: NavDataType = [
         items: [{
             id: 0,
             type: NavTypes.ITEM,
-            content: "Your Work"
+            content: "Your Work",
+            authOnly: true,
         }, {
             id: 1,
             type: NavTypes.ITEM,
-            content: "Projects"
+            content: "Projects",
+            authOnly: true,
         }, {
             id: 2,
             type: NavTypes.ITEM,
-            content: "Filters"
+            content: "Filters",
+            authOnly: true,
         }
         ]
     }, {

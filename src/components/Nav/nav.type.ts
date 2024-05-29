@@ -8,10 +8,15 @@ export interface NavItemInterface {
     id: number;
     type: NavTypes;
     content?: string;
+    authOnly?: boolean;
 }
 
 export interface Composition {
     children: ReactNode;
+}
+
+export interface NavItemsInterface extends Composition {
+    authOnly?: boolean;
 }
 
 export enum NavTypes {
