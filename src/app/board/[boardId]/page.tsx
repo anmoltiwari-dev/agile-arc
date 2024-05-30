@@ -2,7 +2,7 @@ import React from 'react'
 
 const BoardPage = () => {
   return (
-    <div>BoardPage</div>
+    <div className='pt-16 sm:ml-[250px]'>BoardPage</div>
   )
 }
 
