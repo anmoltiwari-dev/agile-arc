@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "../context/AuthProvider";
 import { Navbar } from "@/components/Nav";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { SideNav } from "@/components/SideNav";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             <Navbar />
+            <SideNav />
             {children}
           </AuthProvider>
         </ThemeProvider>
