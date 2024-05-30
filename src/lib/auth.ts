@@ -1,3 +1,9 @@
+import type {
+    GetServerSidePropsContext,
+    NextApiRequest,
+    NextApiResponse,
+} from "next"
+import { getServerSession } from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import {NextAuthOptions} from "next-auth";
 import {PrismaAdapter} from "@auth/prisma-adapter";
@@ -12,4 +18,14 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_SECRET || ''
         })
     ],
+};
+
+// Use it in server contexts
+export function auth(
+...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+return getServerSession(...args, authOptions)
 }
