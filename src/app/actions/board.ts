@@ -31,12 +31,18 @@ export async function fetchBoard(boardId: string, skip: number = 0, take: number
         where: {
             boardId
         },
+        include: {
+            assignedUser: {
+                select: {
+                    name: true,
+                }
+            }
+        },
         skip: Number(skip),
         take: Number(take)
     });
 
-    const promiseArr = [board, boardColumns, boardTickets];
-    const data = await Promise.all(promiseArr);
+    const data = await Promise.all([board, boardColumns, boardTickets]);
     return {
         data: {
             board: data[0],

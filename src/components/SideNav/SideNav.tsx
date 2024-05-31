@@ -12,10 +12,10 @@ interface SideNavProps {
 
 const SideNav = async ({ isMobileView = false }: SideNavProps) => {
     const session= await auth();
-    if (!session) return <></>;
+    if (session) return <></>;
     const boardsData = await getAllBoards();
   return (
-    <div className={cx('w-full sm:w-[250px] sidebar-bg', {
+    <div className={cx('w-full sm:w-[250px] sidebar-bg mt-0 sm:mt-[60px] sm:h-[calc(100vh-60px)]', {
         ['hidden sm:block fixed']: !isMobileView
     })}>{
         boardsData.map((board) =>

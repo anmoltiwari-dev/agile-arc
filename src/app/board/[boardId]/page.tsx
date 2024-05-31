@@ -1,4 +1,6 @@
 import { fetchBoard } from '@/app/actions/board'
+import { Board } from '@/components/Board'
+import { BoardTicketWithUser } from '@/schema/general';
 import React from 'react'
 
 interface BoardPageProps {
@@ -7,11 +9,12 @@ interface BoardPageProps {
     }
 }
 
-const BoardPage = async ({params}:BoardPageProps) => {
+const BoardPage = async ({ params }:BoardPageProps) => {
     const { data } = await fetchBoard(params.boardId);
-    console.log(data)
   return (
-    <div className='pt-16 sm:ml-[250px]'>{params.boardId}</div>
+    <div className='pt-16 px-0 sm:ml-[250px] sm:px-3'>
+        <Board boardColumns={data.boardColumns} boardTickets={data.boardTickets} />
+    </div>
   )
 }
 
