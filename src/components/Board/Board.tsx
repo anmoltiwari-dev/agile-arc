@@ -25,9 +25,9 @@ const Board = ({ boardColumns, boardTickets }: BoardProps) => {
       if (tk.id === result.draggableId) {
         return {...tk, boardColumnId: result.destination?.droppableId, position: result.destination?.index}
       } else if (tk.boardColumnId === result.destination?.droppableId && tk.position >= result.destination?.index) {
-        return {...tk, position: result.destination?.index + 1};
+        return {...tk, position: tk.position + 1};
       } else if (tk.boardColumnId === result.source.droppableId && tk.position > result.source.index) {
-        return {...tk, position: result.destination?.index - 1};
+        return {...tk, position: tk.position - 1};
       }
       return tk;
     });
