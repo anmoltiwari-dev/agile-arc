@@ -1,7 +1,8 @@
 "use server"
 
+import { BoardTicketWithUser } from '@/schema/general';
 import { prismaClient } from '../../lib/primsa';
-import type { Board } from '@prisma/client';
+import type { Board, BoardTicket } from '@prisma/client';
 
 export async function getAllBoards() {
     const boards = await prismaClient.board.findMany({
@@ -51,3 +52,18 @@ export async function fetchBoard(boardId: string, skip: number = 0, take: number
         }
     }
 }
+
+export const updateTicketsOnBackend = async (ticketsToUpdate: BoardTicket[]) => {
+    const transactions = ticketsToUpdate.map((tk) => {
+        return prismaClient.boardTicket.update({
+            where: {
+                id: tk.id,
+            },
+            data: {
+                boardColumnId: tk.boardColumnId,
+                position: tk.position
+            }
+        })
+    });
+    await prismaClient.$transaction(transactions);
+};

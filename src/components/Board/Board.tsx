@@ -7,6 +7,7 @@ import type { OnDragEndResponder } from "@hello-pangea/dnd";
 import cx from "classnames";
 import { Ticket } from "./Ticket";
 import { BoardTicketWithUser } from "@/schema/general";
+import { updateTicketsOnBackend } from "@/app/actions/board";
 
 interface BoardProps {
   boardColumns: BoardColumn[];
@@ -32,6 +33,7 @@ const Board = ({ boardColumns, boardTickets }: BoardProps) => {
       return tk;
     });
     setTickets(updatedTickets);
+    updateTicketsOnBackend(updatedTickets);
   };
 
   return (
