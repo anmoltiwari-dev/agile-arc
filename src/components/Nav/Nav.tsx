@@ -10,7 +10,7 @@ import { navData } from "@/lib/navData";
 import { Composition, NavItemsInterface } from "./nav.type";
 import { useSession } from "next-auth/react";
 import customHook from "@/hooks";
-import { NavCreateBtn } from "./NavCreateBtn";
+import { NavCreateBtn } from "./index";
 
 const NavContainer = (props: Composition) => {
     const { useWindowDimensions } = customHook;
@@ -68,14 +68,8 @@ const NavGroup = (props: Composition) => {
     </div>
   );
 };
+
 const Navbar = () => {
-  useEffect(() => {
-    // const fetchConfig = async () => {
-    //   const greetings = await get("greeting");
-    //   console.log(greetings);
-    // };
-    // fetchConfig();
-  }, []);
   const navItemMap = {
     logo: NavLogo,
     item: NavItem,
@@ -91,7 +85,7 @@ const Navbar = () => {
             <NavGroup key={navGroup.id}>
               {navGroup.items.map((nI, id) => {
                 const Item = navItemMap[nI.type] || <></>;
-                return <Item key={id} authOnly={nI.authOnly}>{nI.content ? nI.content : null}</Item>;
+                return <Item key={id} authOnly={nI.authOnly}>{nI?.content ? nI.content : null}</Item>;
               })}
             </NavGroup>
           );

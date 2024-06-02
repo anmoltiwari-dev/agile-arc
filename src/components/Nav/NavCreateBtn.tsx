@@ -1,4 +1,5 @@
 "use client";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -10,13 +11,13 @@ import {
   Select,
   Typography,
 } from "@material-tailwind/react";
-import React, { useState, useRef, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import * as z from "zod";
 import { getUsers } from "@/app/actions/users";
 import { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 interface CreateTicketFields {
   title: string;
@@ -25,7 +26,8 @@ interface CreateTicketFields {
   storyPoints?: number;
 }
 
-const NavCreateBtn = () => {
+const NavCreateBtn = ({ authOnly }: { authOnly?: boolean }) => {
+  const { data: session, status } = useSession();
   const [openCreateModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const editorRef = useRef<unknown | null>(null);
@@ -49,8 +51,10 @@ const NavCreateBtn = () => {
       storyPoints: 0,
     },
   });
+
   const handleModalOpen = () => setOpenModal(true);
   const handleModalClose = () => setOpenModal(false);
+
   const handleCreateTicketSubmit: SubmitHandler<CreateTicketFields> = (
     data
   ) => {
@@ -59,11 +63,13 @@ const NavCreateBtn = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-        const users = await getUsers();
-        setUsers(users);
-    }
+      const users = await getUsers();
+      setUsers(users);
+    };
     fetchUsers();
-  }, [])
+  }, []);
+
+  if (authOnly && status !== "authenticated") return <></>;
   return (
     <>
       <button
@@ -152,7 +158,9 @@ const NavCreateBtn = () => {
                 >
                   {users.map((user, index) => (
                     <Option key={index} value={user.id}>
-                      <div className="flex items-center gap-x-2">{user.name}</div>
+                      <div className="flex items-center gap-x-2">
+                        {user.name}
+                      </div>
                     </Option>
                   ))}
                 </Select>
