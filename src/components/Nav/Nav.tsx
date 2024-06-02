@@ -10,6 +10,7 @@ import { navData } from "@/lib/navData";
 import { Composition, NavItemsInterface } from "./nav.type";
 import { useSession } from "next-auth/react";
 import customHook from "@/hooks";
+import { NavCreateBtn } from "./NavCreateBtn";
 
 const NavContainer = (props: Composition) => {
     const { useWindowDimensions } = customHook;
@@ -80,6 +81,7 @@ const Navbar = () => {
     item: NavItem,
     avatar: NavAvatar,
     themeToggle: ThemeToggle,
+    create: NavCreateBtn
   };
   return (
     <NavContainer>

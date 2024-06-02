@@ -1,6 +1,5 @@
 "use server"
 
-import { BoardTicketWithUser } from '@/schema/general';
 import { prismaClient } from '../../lib/primsa';
 import type { Board, BoardTicket } from '@prisma/client';
 
