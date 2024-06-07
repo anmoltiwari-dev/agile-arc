@@ -24,6 +24,7 @@ export enum NavTypes {
     ITEM = "item",
     AVATAR = "avatar",
     THEME_TOGGLE = "themeToggle",
+    CREATE = "create",
 }
 
 export type NavDataType = NavGroupInterface[];

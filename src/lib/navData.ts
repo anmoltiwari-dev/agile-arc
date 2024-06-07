@@ -25,8 +25,11 @@ export const navData: NavDataType = [
             type: NavTypes.ITEM,
             content: "Filters",
             authOnly: true,
-        }
-        ]
+        }, {
+            id: 3,
+            type: NavTypes.CREATE,
+            authOnly: true
+        }]
     }, {
         id: 2,
         items: [

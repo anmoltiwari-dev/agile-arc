@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
             boardTickets: data[2]
         } }, { status: 200 });
     } catch (err) {
-        console.log(err);
         return Response.json({ error: { message: "Something went wrong!" } },  { status: 500 });
     }
 }

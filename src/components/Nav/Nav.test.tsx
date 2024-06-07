@@ -7,12 +7,10 @@ import { Navbar } from "./Nav";
 
 describe("Navbar tests", () => {
   test("should render navbar unauthenticated", () => {
-    jest
-      .spyOn(hooks, "useSession")
-      .mockImplementation(() => ({
-        data: { user: { image: "" } },
-        status: "unauthenticated",
-      }));
+    jest.spyOn(hooks, "useSession").mockImplementation(() => ({
+      data: { user: { image: "" } },
+      status: "unauthenticated",
+    }));
     const { getByTestId, queryByTestId, queryByText } = render(<Navbar />);
     const profilePictureElem = queryByTestId("profile-shimmer");
     expect(profilePictureElem).not.toBeInTheDocument();
@@ -23,12 +21,10 @@ describe("Navbar tests", () => {
   });
 
   test("should render navbar authenticated", () => {
-    jest
-      .spyOn(hooks, "useSession")
-      .mockImplementation(() => ({
-        data: { user: { image: "" } },
-        status: "authenticated",
-      }));
+    jest.spyOn(hooks, "useSession").mockImplementation(() => ({
+      data: { user: { image: "" } },
+      status: "authenticated",
+    }));
     const { getByTestId, getByText, queryByTestId } = render(<Navbar />);
     const profilePictureElem = getByTestId("profile-shimmer");
     expect(profilePictureElem).toBeInTheDocument();
@@ -39,18 +35,14 @@ describe("Navbar tests", () => {
   });
 
   test("Navbar in mobile view", () => {
-    jest
-      .spyOn(hooks, "useSession")
-      .mockImplementation(() => ({
-        data: { user: { image: "" } },
-        status: "unauthenticated",
-      }));
-    jest
-      .spyOn(customHooks, "useWindowDimensions")
-      .mockImplementation(() => ({
-        windowDimensions: { height: 300, width: 300 },
-        isDesktop: false,
-      }));
+    jest.spyOn(hooks, "useSession").mockImplementation(() => ({
+      data: { user: { image: "" } },
+      status: "unauthenticated",
+    }));
+    jest.spyOn(customHooks, "useWindowDimensions").mockImplementation(() => ({
+      windowDimensions: { height: 300, width: 300 },
+      isDesktop: false,
+    }));
     const { getByTestId } = render(<Navbar />);
     const hamburgerIcn = getByTestId("hamburger-icon");
     expect(hamburgerIcn).toBeInTheDocument();
