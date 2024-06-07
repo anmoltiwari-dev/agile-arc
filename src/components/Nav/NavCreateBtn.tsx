@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
@@ -15,7 +16,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import * as z from "zod";
-import { getUsers } from "@/app/actions/users";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
@@ -26,7 +26,9 @@ interface CreateTicketFields {
   storyPoints?: number;
 }
 
-const NavCreateBtn = ({ authOnly }: { authOnly?: boolean }) => {
+const NavCreateBtn = ({ authOnly }: {
+    authOnly?: boolean;
+}) => {
   const { data: session, status } = useSession();
   const [openCreateModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
@@ -63,10 +65,11 @@ const NavCreateBtn = ({ authOnly }: { authOnly?: boolean }) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const users = await getUsers();
-      setUsers(users);
-    };
-    fetchUsers();
+      const users = await fetch('api/users/fetch');
+      const usersData = await users.json();
+      setUsers(usersData.users);
+    }
+    if (typeof window !== 'undefined') fetchUsers();
   }, []);
 
   if (authOnly && status !== "authenticated") return <></>;
